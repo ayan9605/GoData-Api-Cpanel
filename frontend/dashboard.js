@@ -1,5 +1,5 @@
 const ADMIN_KEY = '@12345678'; // replace with your admin key
-const BASE_URL = 'https://godata-api-cpanel.onrender.com';
+const BASE_URL = 'https://godata-api-cpanel.onrender.com/admin';
 
 async function fetchUsers() {
   const res = await fetch(`${BASE_URL}/users`, { headers: { 'x-admin-key': ADMIN_KEY } });
