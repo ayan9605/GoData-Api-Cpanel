@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Login</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div id="login-container">
+    <h2>Admin Login</h2>
+    <input type="password" id="adminKey" placeholder="Enter Admin Key">
+    <button onclick="login()">Login</button>
+    <p id="error" style="color:red;"></p>
+  </div>
+
+  <script>
+    function login() {
+      const key = document.getElementById('adminKey').value;
+      if(!key) {
+        document.getElementById('error').innerText = 'Please enter a key';
+        return;
+      }
+      // Store key in session storage
+      sessionStorage.setItem('ADMIN_KEY', key);
+      // Redirect to dashboard
+      window.location.href = 'index.html';
+    }
+  </script>
+</body>
+</html>
