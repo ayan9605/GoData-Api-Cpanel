@@ -6,7 +6,9 @@ async function checkLimits(user) {
   if (!usage) {
     usage = await Usage.create({
       user_id: user._id,
+      storage_used_bytes: 0,
       storage_limit_bytes: DEFAULT_STORAGE_LIMIT,
+      requests_made: 0,
       request_limit: DEFAULT_REQUEST_LIMIT
     });
   }
@@ -22,10 +24,13 @@ async function checkLimits(user) {
   return { allowed: true, usage };
 }
 
-async function logUsage(user, size = 0) {
+async function logUsage(user, requestSize = 0, responseSize = 0) {
   const usage = await Usage.findOne({ user_id: user._id });
+  if (!usage) return;
+
   usage.requests_made += 1;
-  usage.storage_used_bytes += size;
+  usage.storage_used_bytes += requestSize + responseSize;
+
   await usage.save();
 }
 
