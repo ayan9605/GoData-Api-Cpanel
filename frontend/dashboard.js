@@ -1,8 +1,19 @@
-const ADMIN_KEY = '@12345678'; // replace with your admin key
-const BASE_URL = 'https://godata-api-cpanel.onrender.com/admin';
+// Get key from session storage
+const ADMIN_KEY = sessionStorage.getItem('ADMIN_KEY');
+const BASE_URL = '/admin';
+
+if(!ADMIN_KEY){
+  // Redirect to login if key not entered
+  window.location.href = 'login.html';
+}
 
 async function fetchUsers() {
   const res = await fetch(`${BASE_URL}/users`, { headers: { 'x-admin-key': ADMIN_KEY } });
+  if(res.status === 403){
+    alert('Invalid Admin Key');
+    window.location.href = 'login.html';
+    return;
+  }
   const data = await res.json();
   document.getElementById('users-list').innerHTML = data.map(u => `<li>${u.name} (${u.email})</li>`).join('');
 }
