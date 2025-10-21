@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Dashboard</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<h1>Admin Dashboard</h1>
+<div id="users-section">
+  <h2>Users</h2>
+  <button onclick="fetchUsers()">Load Users</button>
+  <ul id="users-list"></ul>
+</div>
+
+<div id="backends-section">
+  <h2>Backends</h2>
+  <button onclick="fetchBackends()">Load Backends</button>
+  <ul id="backends-list"></ul>
+</div>
+
+<div id="usage-section">
+  <h2>Usage Analytics</h2>
+  <button onclick="fetchUsage()">Load Usage</button>
+  <ul id="usage-list"></ul>
+</div>
+
+<script src="dashboard.js"></script>
+</body>
+</html>
