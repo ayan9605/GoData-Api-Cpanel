@@ -1,31 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Admin Dashboard</title>
-<link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8">
+  <title>Admin Dashboard</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-<h1>Admin Dashboard</h1>
-<div id="users-section">
-  <h2>Users</h2>
-  <button onclick="fetchUsers()">Load Users</button>
-  <ul id="users-list"></ul>
-</div>
+  <h1>Admin Dashboard</h1>
 
-<div id="backends-section">
-  <h2>Backends</h2>
-  <button onclick="fetchBackends()">Load Backends</button>
-  <ul id="backends-list"></ul>
-</div>
+  <section id="user-management">
+    <h2>Users</h2>
+    <form id="create-user-form">
+      <input type="text" id="user-name" placeholder="Name" required />
+      <input type="email" id="user-email" placeholder="Email" required />
+      <select id="user-backend"></select>
+      <button type="submit">Create User</button>
+    </form>
+    <ul id="users-list"></ul>
+  </section>
 
-<div id="usage-section">
-  <h2>Usage Analytics</h2>
-  <button onclick="fetchUsage()">Load Usage</button>
-  <ul id="usage-list"></ul>
-</div>
+  <section id="backend-management">
+    <h2>Backends</h2>
+    <form id="create-backend-form">
+      <input type="text" id="backend-name" placeholder="Backend Name" required />
+      <input type="url" id="backend-url" placeholder="Base URL" required />
+      <button type="submit">Add Backend</button>
+    </form>
+    <ul id="backends-list"></ul>
+  </section>
 
-<script src="dashboard.js"></script>
+  <section id="usage">
+    <h2>Usage</h2>
+    <ul id="usage-list"></ul>
+  </section>
+
+  <script src="dashboard.js"></script>
 </body>
 </html>
