@@ -22,14 +22,16 @@ router.all('/*', async (req, res) => {
     if (!backend) return res.status(502).json({ error: 'Backend not available' });
 
     // Forward request
-    const url = `${backend.base_url}${req.originalUrl}`;
-    const method = req.method.toLowerCase();
+    // Remove '/proxy' from the path before sending to backend
+    const pathWithoutProxy = req.originalUrl.replace(/^\/proxy/, '');
+    const url = `${backend.base_url}${pathWithoutProxy}`;
 
     const response = await axios({
-      method,
+      method: req.method.toLowerCase(),
       url,
-      headers: { ...req.headers, 'host': undefined },
-      data: req.body
+      headers: { ...req.headers, host: undefined, 'x-api-key': undefined }, // remove API key before forwarding
+      data: req.body,
+      timeout: 10000 // 10 seconds
     });
 
     // Log usage
@@ -38,13 +40,15 @@ router.all('/*', async (req, res) => {
     await Log.create({
       user_id: user._id,
       action: req.method,
-      collection: req.originalUrl,
+      collection: pathWithoutProxy,
       size_bytes: size,
       response_status: response.status
     });
 
     res.status(response.status).json(response.data);
   } catch (err) {
+    // If backend responds with 404 or 400, pass the response
+    if (err.response) return res.status(err.response.status).json(err.response.data);
     res.status(500).json({ error: err.message });
   }
 });
